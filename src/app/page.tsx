@@ -1,65 +1,74 @@
-import Image from "next/image";
+import Preloader from '@/components/Preloader';
+import Navbar from '@/components/Navbar';
+import HeroSection from '@/components/HeroSection';
+import WeAreSection from '@/components/WeAreSection';
+import ClientsMarquee from '@/components/ClientsMarquee';
+import ServicesSection from '@/components/ServicesSection';
+import SelectedWorks from '@/components/SelectedWorks';
+import ReelsSection from '@/components/ReelsSection';
+import WorksGrid from '@/components/WorksGrid';
+import BlogSection from '@/components/BlogSection';
+import Footer from '@/components/Footer';
+import ExitIntentPopup from '@/components/ExitIntentPopup';
+import MultiStepLeadForm from '@/components/MultiStepLeadForm';
+import SEO from '@/components/seo';
 
 export default function Home() {
+  const faqs = [
+    {
+      question: "What does FlowWorks AI do?",
+      answer: "FlowWorks AI is a premium AI automation and custom software agency. We build autonomous AI agents, coordinate automated APIs, and develop custom cross-platform software.",
+    },
+    {
+      question: "What is your primary tech stack?",
+      answer: "We develop primarily using TypeScript, Next.js, React Native, Node.js, and advanced vector search/LLM databases (Pinecone, PGVector, OpenAI, Anthropic).",
+    },
+    {
+      question: "How do I claim a free AI audit?",
+      answer: "Simply scroll to our audit section, fill out the 3-step form, and our senior system architect will send you a tailored automation flowchart.",
+    },
+  ];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <SEO type="Organization" />
+      <SEO type="FAQ" faqs={faqs} />
+      
+      <Preloader />
+      <Navbar />
+      <ExitIntentPopup />
+      
+      <main>
+        <HeroSection />
+        <WeAreSection />
+        <ClientsMarquee />
+        <ServicesSection />
+        <SelectedWorks />
+        <ReelsSection />
+        <WorksGrid />
+        
+        {/* Dynamic Multi-Step Lead Section */}
+        <section id="lead-form-section" className="bg-dark-grid py-24 px-6 border-t border-white/5 relative">
+          <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-[#8B5CF6]/5 rounded-full blur-[130px] pointer-events-none" />
+          <div className="max-w-4xl mx-auto text-center space-y-4 mb-12 relative z-10">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#00D2FF]">
+              Get Started
+            </span>
+            <h2 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-white uppercase">
+              Schedule Your AI Operations Audit
+            </h2>
+            <p className="text-sm text-gray-400 max-w-xl mx-auto leading-relaxed">
+              Fill out our interactive multi-step audit to outline your systems and discover high-value automation potential.
+            </p>
+          </div>
+          <div className="relative z-10">
+            <MultiStepLeadForm />
+          </div>
+        </section>
+
+        <BlogSection />
       </main>
-    </div>
+      <Footer />
+    </>
   );
 }
