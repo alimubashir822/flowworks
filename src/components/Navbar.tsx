@@ -46,6 +46,56 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
 
+  const socialLinks = [
+    {
+      name: "Facebook",
+      href: "#",
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor">
+          <path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/>
+        </svg>
+      )
+    },
+    {
+      name: "LinkedIn",
+      href: "#",
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+        </svg>
+      )
+    },
+    {
+      name: "Instagram",
+      href: "#",
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+      )
+    },
+    {
+      name: "X-Twitter",
+      href: "#",
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      )
+    },
+    {
+      name: "Pinterest",
+      href: "#",
+      icon: (
+        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor">
+          <path d="M12.24 2C6.6 2 2 6.6 2 12.24c0 4.3 2.64 8 6.46 9.54-.1-.8-.19-2-.03-2.86.14-.6.93-3.97.93-3.97s-.24-.47-.24-1.17c0-1.1.64-1.92 1.43-1.92.67 0 1 .5 1 1.1 0 .68-.43 1.7-.66 2.64-.18.78.4 1.42 1.17 1.42 1.4 0 2.48-1.48 2.48-3.6 0-1.88-1.35-3.2-3.28-3.2-2.24 0-3.55 1.68-3.55 3.4 0 .68.26 1.4.59 1.8.06.08.07.15.05.23l-.22.9c-.04.14-.12.17-.27.1-1-.46-1.63-1.9-1.63-3.06 0-2.5 1.8-4.8 5.25-4.8 2.76 0 4.9 1.97 4.9 4.6 0 2.74-1.73 4.95-4.14 4.95-.8 0-1.57-.42-1.83-.92l-.5 1.9c-.18.68-.67 1.53-1 2.06 1 .3 2 .47 3 .47 5.64 0 10.24-4.6 10.24-10.24C22.5 6.6 17.9 2 12.24 2z"/>
+        </svg>
+      )
+    }
+  ];
+
   return (
     <>
       <header className="fixed top-0 left-0 w-full z-[99999] px-6 sm:px-12 py-6 flex items-center justify-between bg-black/15 backdrop-blur-lg border-b border-white/5">
@@ -190,6 +240,20 @@ export default function Navbar() {
                       </Link>
                     ))}
                   </div>
+                </div>
+
+                {/* Social Icons inside side menu */}
+                <div className="pt-6 border-t border-white/10 flex gap-4 items-center">
+                  {socialLinks.map(s => (
+                    <a
+                      key={s.name}
+                      href={s.href}
+                      aria-label={s.name}
+                      className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-gray-400 hover:text-[#00D2FF] hover:border-[#00D2FF] transition-all cursor-none"
+                    >
+                      {s.icon}
+                    </a>
+                  ))}
                 </div>
               </nav>
               
