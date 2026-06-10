@@ -177,6 +177,9 @@ export default function Navbar() {
           <Link href="/case-study" className="text-gray-300 hover:text-white text-sm font-medium transition-colors cursor-none">
             Case Studies
           </Link>
+          <Link href="/blog" className="text-gray-300 hover:text-white text-sm font-medium transition-colors cursor-none">
+            Blog
+          </Link>
           <Link href="/about" className="text-gray-300 hover:text-white text-sm font-medium transition-colors cursor-none">
             About Us
           </Link>
@@ -221,6 +224,9 @@ export default function Navbar() {
                 </Link>
                 <Link href="/case-study" onClick={() => setOpen(false)} className="text-white hover:text-[#00D2FF] text-2xl sm:text-4xl font-display font-semibold transition-colors cursor-none">
                   CASE STUDIES
+                </Link>
+                <Link href="/blog" onClick={() => setOpen(false)} className="text-white hover:text-[#00D2FF] text-2xl sm:text-4xl font-display font-semibold transition-colors cursor-none">
+                  BLOG
                 </Link>
                 
                 <div className="space-y-2">

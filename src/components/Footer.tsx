@@ -148,8 +148,8 @@ export default function Footer() {
 
           {/* Nav links */}
           <nav style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
-            {['Home', 'About', 'AI Automation', 'Software Dev', 'Audit Form'].map((item, idx) => {
-              const hrefs = ['/', '/about', '/services/ai-automation', '/services/custom-software-development', '#lead-form-section'];
+            {['Home', 'About', 'AI Automation', 'Software Dev', 'Blog', 'Audit Form'].map((item, idx) => {
+              const hrefs = ['/', '/about', '/services/ai-automation', '/services/custom-software-development', '/blog', '#lead-form-section'];
               return (
                 <a
                   key={item}
