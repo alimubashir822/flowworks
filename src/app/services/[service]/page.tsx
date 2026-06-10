@@ -191,7 +191,7 @@ export default async function ServicePage({ params }: Props) {
           <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#00D2FF]/5 rounded-full blur-[140px] pointer-events-none animate-pulse duration-[8000ms]" />
           <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#8B5CF6]/5 rounded-full blur-[140px] pointer-events-none animate-pulse duration-[10000ms]" />
 
-          <div className="max-w-6xl mx-auto px-6 space-y-24">
+          <div className="max-w-[1400px] mx-auto px-6 space-y-24">
             
             {/* Section 1: Hero Zone */}
             <section className="text-center space-y-6 max-w-4xl mx-auto pt-8">
@@ -447,7 +447,7 @@ export default async function ServicePage({ params }: Props) {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00D2FF]/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#8B5CF6]/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-[1400px] mx-auto px-6">
           <div className="mb-8">
             <Link
               href="/#services"
@@ -467,7 +467,7 @@ export default async function ServicePage({ params }: Props) {
                 <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-none">
                   {service.name}
                 </h1>
-                <p className="text-lg text-gray-300 leading-relaxed pt-2 font-sans">
+                <p className="text-lg text-gray-300 leading-relaxed pt-2 font-sans font-light">
                   {service.fullDesc}
                 </p>
               </div>

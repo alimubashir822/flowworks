@@ -59,7 +59,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#8B5CF6]/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-[#00D2FF]/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-[1400px] mx-auto px-6">
           <div className="mb-8">
             <Link
               href="/blog"

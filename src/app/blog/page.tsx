@@ -17,7 +17,7 @@ export default function BlogListingPage() {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#00D2FF]/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#8B5CF6]/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="max-w-6xl mx-auto px-6 space-y-16">
+        <div className="max-w-[1400px] mx-auto px-6 space-y-16">
           
           {/* Header */}
           <div className="max-w-3xl space-y-4">
