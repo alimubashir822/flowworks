@@ -7,7 +7,6 @@ import ServicesSection from '@/components/ServicesSection';
 import SelectedWorks from '@/components/SelectedWorks';
 import ReelsSection from '@/components/ReelsSection';
 import WorksGrid from '@/components/WorksGrid';
-import BlogSection from '@/components/BlogSection';
 import Footer from '@/components/Footer';
 import ExitIntentPopup from '@/components/ExitIntentPopup';
 import MultiStepLeadForm from '@/components/MultiStepLeadForm';
@@ -66,7 +65,7 @@ export default function Home() {
           </div>
         </section>
 
-        <BlogSection />
+
       </main>
       <Footer />
     </>

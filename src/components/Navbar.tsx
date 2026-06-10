@@ -180,9 +180,6 @@ export default function Navbar() {
           <Link href="/about" className="text-gray-300 hover:text-white text-sm font-medium transition-colors cursor-none">
             About Us
           </Link>
-          <Link href="#lead-form-section" className="text-gray-300 hover:text-white text-sm font-medium transition-colors cursor-none">
-            Pricing
-          </Link>
         </nav>
 
         {/* Right: CTA & Hamburger */}

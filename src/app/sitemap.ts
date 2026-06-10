@@ -1,6 +1,5 @@
 import { MetadataRoute } from "next";
 import { SERVICES, STATES, CITIES } from "../lib/location-data";
-import { BLOG_POSTS } from "../lib/blog-data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://flowworks.ai";
@@ -43,27 +42,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     },
-    {
-      url: `${baseUrl}/pricing`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
-    },
   ];
 
-  // Blog article routes
-  const blogRoutes = BLOG_POSTS.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+
 
   // Service routes
   const serviceRoutes = SERVICES.map((service) => ({
@@ -99,5 +80,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  return [...coreRoutes, ...blogRoutes, ...serviceRoutes, ...stateRoutes, ...cityRoutes];
+  return [...coreRoutes, ...serviceRoutes, ...stateRoutes, ...cityRoutes];
 }
