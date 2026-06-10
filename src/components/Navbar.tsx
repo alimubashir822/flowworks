@@ -109,7 +109,7 @@ export default function Navbar() {
             </svg>
           </div>
           <span className="text-white font-bold text-xl tracking-tight font-display">
-            FlowWorks <span className="text-[#00D2FF]">AI</span>
+            FlowWorks
           </span>
         </Link>
 

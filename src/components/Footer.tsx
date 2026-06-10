@@ -143,7 +143,7 @@ export default function Footer() {
                 <circle cx="12" cy="12" r="3" fill="currentColor" />
               </svg>
             </div>
-            <span style={{ color: '#fff', fontSize: 16, fontWeight: 700, letterSpacing: '-0.02em', fontFamily: 'Space Grotesk, sans-serif' }}>FlowWorks <span className="text-[#00D2FF]">AI</span></span>
+            <span style={{ color: '#fff', fontSize: 16, fontWeight: 700, letterSpacing: '-0.02em', fontFamily: 'Space Grotesk, sans-serif' }}>FlowWorks</span>
           </div>
 
           {/* Nav links */}
