@@ -1,11 +1,10 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/seo";
 import { BLOG_POSTS } from "@/lib/blog-data";
-import { ArrowLeft, Clock, Calendar } from "lucide-react";
+import BlogDetailClient from "./BlogDetailClient";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -30,6 +29,31 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${post.title} | FlowWorks AI Blog`,
     description: post.excerpt,
+    openGraph: {
+      title: `${post.title} | FlowWorks AI Blog`,
+      description: post.excerpt,
+      url: `https://flowworks.ai/blog/${post.slug}`,
+      type: "article",
+      publishedTime: post.dateIso,
+      authors: [post.author.name],
+      images: [
+        {
+          url: post.image,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post.title} | FlowWorks AI Blog`,
+      description: post.excerpt,
+      images: [post.image],
+    },
+    alternates: {
+      canonical: `https://flowworks.ai/blog/${post.slug}`,
+    },
   };
 }
 
@@ -41,8 +65,21 @@ export default async function BlogPostPage({ params }: Props) {
     notFound();
   }
 
+  // Compute Related Posts: up to 3 posts in same category or recent posts, excluding current post
+  const relatedPosts = BLOG_POSTS.filter(
+    (p) => p.category === post.category && p.slug !== post.slug
+  ).slice(0, 3);
+
+  if (relatedPosts.length < 3) {
+    const additionalPosts = BLOG_POSTS.filter(
+      (p) => p.category !== post.category && p.slug !== post.slug
+    ).slice(0, 3 - relatedPosts.length);
+    relatedPosts.push(...additionalPosts);
+  }
+
   return (
     <>
+      {/* Dynamic SEO Schemas */}
       <SEO
         type="Breadcrumb"
         breadcrumbs={[
@@ -51,6 +88,18 @@ export default async function BlogPostPage({ params }: Props) {
           { name: post.title, item: `https://flowworks.ai/blog/${post.slug}` },
         ]}
       />
+      <SEO
+        type="Article"
+        articleTitle={post.title}
+        articleImage={post.image}
+        datePublished={post.dateIso}
+        description={post.excerpt}
+        url={`https://flowworks.ai/blog/${post.slug}`}
+        authorName={post.author.name}
+      />
+      {post.faqs && post.faqs.length > 0 && (
+        <SEO type="FAQ" faqs={post.faqs} />
+      )}
 
       <Navbar />
 
@@ -59,52 +108,7 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#8B5CF6]/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-[#00D2FF]/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="mb-8">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors cursor-none group"
-            >
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              Back to Blog
-            </Link>
-          </div>
-
-          <article className="space-y-8">
-            {/* Header */}
-            <div className="space-y-4">
-              <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-[#00D2FF] uppercase tracking-wider">
-                {post.category}
-              </span>
-              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight uppercase">
-                {post.title}
-              </h1>
-              <div className="flex gap-4 items-center text-xs font-mono text-gray-500 pt-2 border-t border-white/5">
-                <span className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" /> {post.date}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" /> {post.readTime}
-                </span>
-              </div>
-            </div>
-
-            {/* Image */}
-            <div className="aspect-[16/9] rounded-2xl overflow-hidden relative border border-white/5">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Content Body */}
-            <div 
-              className="prose prose-invert max-w-none text-gray-300 space-y-6 leading-relaxed text-sm sm:text-base pt-4"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
-          </article>
-        </div>
+        <BlogDetailClient post={post} relatedPosts={relatedPosts} />
       </main>
 
       <Footer />

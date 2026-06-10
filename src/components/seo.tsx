@@ -11,7 +11,7 @@ interface BreadcrumbItem {
 }
 
 interface SEOProps {
-  type?: "Organization" | "LocalBusiness" | "Service" | "FAQ" | "Breadcrumb";
+  type?: "Organization" | "LocalBusiness" | "Service" | "FAQ" | "Breadcrumb" | "Article";
   name?: string;
   description?: string;
   url?: string;
@@ -22,6 +22,10 @@ interface SEOProps {
   serviceProvider?: string;
   city?: string;
   state?: string;
+  articleTitle?: string;
+  articleImage?: string;
+  datePublished?: string;
+  authorName?: string;
 }
 
 export default function SEO({
@@ -36,6 +40,10 @@ export default function SEO({
   serviceProvider = "FlowWorks AI",
   city,
   state,
+  articleTitle,
+  articleImage,
+  datePublished,
+  authorName,
 }: SEOProps) {
   let schema: any = null;
 
@@ -113,6 +121,31 @@ export default function SEO({
         "name": crumb.name,
         "item": crumb.item
       }))
+    };
+  } else if (type === "Article" && articleTitle) {
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": articleTitle,
+      "image": articleImage,
+      "datePublished": datePublished,
+      "description": description,
+      "author": {
+        "@type": "Person",
+        "name": authorName || "FlowWorks AI Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "FlowWorks AI",
+        "logo": {
+          "@type": "ImageObject",
+          "url": logo
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": url
+      }
     };
   }
 
