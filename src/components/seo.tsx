@@ -55,8 +55,8 @@ export default function SEO({
       "url": url,
       "logo": logo,
       "sameAs": [
-        "https://twitter.com/neefox_ai",
-        "https://www.linkedin.com/company/neefox-ai"
+        "https://twitter.com/flowworks_ai",
+        "https://www.linkedin.com/company/flowworks-ai"
       ],
       "contactPoint": {
         "@type": "ContactPoint",

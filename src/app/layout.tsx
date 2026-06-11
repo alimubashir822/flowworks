@@ -16,13 +16,14 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "FlowWorks AI — Premium AI Automation & Custom Software Development Agency",
-  description: "FlowWorks AI builds custom AI agents, automated workflows, custom software, mobile apps, and programmatic SEO systems that scale businesses.",
-  keywords: "AI Automation, AI Agents, Software Development, Web Design, Mobile Apps, SEO Services, FlowWorks AI, FlowWorks",
+  title: "FlowWorks — Premium AI Automation & Custom Software Development Agency",
+  description: "FlowWorks builds custom AI agents, automated workflows, custom software, mobile apps, and programmatic SEO systems that scale businesses.",
+  keywords: "AI Automation, AI Agents, Software Development, Web Design, Mobile Apps, SEO Services, FlowWorks, FlowWorks AI",
   openGraph: {
-    title: "FlowWorks AI — Premium AI Automation & Custom Software Development",
+    title: "FlowWorks — Premium AI Automation & Custom Software Development",
     description: "Empower your business with custom AI agents and enterprise workflow automation.",
     type: "website",
+    locale: "en_US",
   },
 };
 
@@ -32,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en-US" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className="overflow-x-hidden">
         <CustomCursor />
         {children}

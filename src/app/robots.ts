@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/private/",
     },
-    sitemap: "https://neefox.ai/sitemap.xml",
+    sitemap: "https://flowworks.ai/sitemap.xml",
   };
 }
