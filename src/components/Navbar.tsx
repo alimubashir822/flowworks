@@ -171,7 +171,7 @@ export default function Navbar() {
             </AnimatePresence>
           </div>
 
-          <Link href="#weare" className="text-gray-300 hover:text-white text-sm font-medium transition-colors cursor-none">
+          <Link href="/industries" className="text-gray-300 hover:text-white text-sm font-medium transition-colors cursor-none">
             Industries
           </Link>
           <Link href="/case-study" className="text-gray-300 hover:text-white text-sm font-medium transition-colors cursor-none">
