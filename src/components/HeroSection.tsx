@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Play, Hexagon, Layers, TrendingUp, Globe, MousePointerClick } from 'lucide-react';
-import Image from 'next/image';
+import HeroAutomationArtwork from '@/components/HeroAutomationArtwork';
 
 export default function HeroSection() {
   const stats = [
@@ -78,20 +78,14 @@ export default function HeroSection() {
 
         </div>
 
-        {/* Right 3D isometric diagram column */}
+        {/* Right column rendering dynamic visualizer instead of static image */}
         <div className="lg:col-span-6 flex items-center justify-center relative">
           <motion.div
             animate={{ y: [0, -12, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="relative w-full max-w-[550px] aspect-square"
+            className="w-full flex items-center justify-center"
           >
-            <Image
-              src="/hero-isometric.png"
-              alt="FlowWorks AI Operations Diagram"
-              fill
-              className="object-contain"
-              priority
-            />
+            <HeroAutomationArtwork />
           </motion.div>
         </div>
 

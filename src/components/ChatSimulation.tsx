@@ -47,9 +47,11 @@ const defaultScript: Message[] = [
 
 interface ChatSimulationProps {
   script?: Message[];
+  agentStatusText?: string;
+  resetTrigger?: any;
 }
 
-export default function ChatSimulation({ script }: ChatSimulationProps) {
+export default function ChatSimulation({ script, agentStatusText, resetTrigger }: ChatSimulationProps) {
   const activeScript = script && script.length > 0 ? script : defaultScript;
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentTurn, setCurrentTurn] = useState<number>(0);
@@ -57,12 +59,12 @@ export default function ChatSimulation({ script }: ChatSimulationProps) {
   const [typingSender, setTypingSender] = useState<"customer" | "agent">("customer");
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  // Reset simulation whenever the script prop updates
+  // Reset simulation whenever the script prop or resetTrigger updates
   useEffect(() => {
     setMessages([]);
     setCurrentTurn(0);
     setIsTyping(false);
-  }, [script]);
+  }, [script, resetTrigger]);
 
   useEffect(() => {
     // Scroll to bottom whenever messages list updates
@@ -109,7 +111,7 @@ export default function ChatSimulation({ script }: ChatSimulationProps) {
         </div>
         <div className="flex items-center gap-2 text-[11px] font-mono text-[#00D2FF] uppercase tracking-wider">
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-          AI Agent Status: Active | Connected to Stripe & CRM API
+          {agentStatusText || "AI Agent Status: Active | Connected to Stripe & CRM API"}
         </div>
         <div>
           {currentTurn >= activeScript.length && (

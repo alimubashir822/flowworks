@@ -1,5 +1,6 @@
 'use client';
 import { useRef } from 'react';
+import Link from 'next/link';
 import { motion, useInView } from 'framer-motion';
 
 export default function Footer() {
@@ -148,10 +149,10 @@ export default function Footer() {
 
           {/* Nav links */}
           <nav style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
-            {['Home', 'About', 'AI Automation', 'Software Dev', 'Blog', 'Audit Form'].map((item, idx) => {
-              const hrefs = ['/', '/about', '/services/ai-automation', '/services/custom-software-development', '/blog', '#lead-form-section'];
+            {['Home', 'Industries', 'Case Studies', 'Blog', 'About Us', 'Contact'].map((item, idx) => {
+              const hrefs = ['/', '/industries', '/case-study', '/blog', '/about', '/contact'];
               return (
-                <a
+                <Link
                   key={item}
                   href={hrefs[idx]}
                   style={{ color: 'rgba(255,255,255,0.4)', fontSize: 13, textDecoration: 'none', transition: 'color 0.3s', cursor: 'none' }}
@@ -159,7 +160,7 @@ export default function Footer() {
                   onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.4)')}
                 >
                   {item}
-                </a>
+                </Link>
               );
             })}
           </nav>

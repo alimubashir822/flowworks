@@ -1,5 +1,6 @@
 'use client';
-import { useEffect, useRef } from 'react';
+
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 const stats = [
@@ -10,100 +11,115 @@ const stats = [
 ];
 
 export default function WeAreSection() {
-  const orbitRef = useRef<SVGCircleElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const inView = useInView(sectionRef, { once: false });
-
-  useEffect(() => {
-    let angle = 0;
-    let raf: number;
-    const orbit = () => {
-      angle += 0.3;
-      if (orbitRef.current) {
-        const cx = 150 + Math.cos((angle * Math.PI) / 180) * 90;
-        const cy = 150 + Math.sin((angle * Math.PI) / 180) * 90;
-        orbitRef.current.setAttribute('cx', String(cx));
-        orbitRef.current.setAttribute('cy', String(cy));
-      }
-      raf = requestAnimationFrame(orbit);
-    };
-    raf = requestAnimationFrame(orbit);
-    return () => cancelAnimationFrame(raf);
-  }, []);
 
   return (
     <section
       id="weare"
       ref={sectionRef}
-      className="bg-dark-grid-subtle"
-      style={{ padding: '10% 5%', overflow: 'hidden' }}
+      className="bg-dark-grid-subtle py-24 px-6 md:px-12 relative overflow-hidden"
     >
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      {/* Background glow highlights */}
+      <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-[#00D2FF]/5 rounded-full blur-[120px] pointer-events-none z-0" />
+      <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-[#8B5CF6]/5 rounded-full blur-[120px] pointer-events-none z-0" />
 
-        {/* Left: orbit animation */}
-        <motion.div
-          initial={{ opacity: 0, x: -60 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-          style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-        >
-          <svg viewBox="0 0 300 300" width="100%" style={{ maxWidth: 400 }}>
-            {/* Outer ring */}
-            <circle cx="150" cy="150" r="130" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" strokeDasharray="4 4" />
-            {/* Inner ring */}
-            <circle cx="150" cy="150" r="90" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
-            {/* Center dot */}
-            <circle cx="150" cy="150" r="8" fill="#00D2FF" />
-            <circle cx="150" cy="150" r="3" fill="#fff" />
-            {/* Orbiting dot */}
-            <circle ref={orbitRef} cx="240" cy="150" r="6" fill="#8B5CF6" opacity="0.8" />
-            {/* NF text in center */}
-            <text x="150" y="148" textAnchor="middle" fill="rgba(0,210,255,0.12)" fontSize="48" fontWeight="700" dy="0.35em" fontFamily="Space Grotesk, sans-serif">NF</text>
-          </svg>
-        </motion.div>
+      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center relative z-10">
 
-        {/* Right: text */}
+        {/* Left Column: Creative Image Illustration */}
+        <div className="lg:col-span-6 w-full flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
+            className="relative w-full h-[518px] flex items-center justify-center"
+          >
+            {/* Slow Floating Motion Wrapper */}
+            <motion.div
+              animate={{ y: [0, -12, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-full h-full rounded-3xl overflow-hidden border border-white/10 shadow-[0_25px_60px_rgba(0,210,255,0.18)] bg-black/40 group cursor-none"
+            >
+              {/* Operations Scale Image */}
+              <img 
+                src="/operations-scale.png" 
+                alt="FlowWorks AI Operations Automation Flow"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              
+              {/* Overlay Gradients */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#00D2FF]/5 via-transparent to-[#8B5CF6]/5 pointer-events-none" />
+
+              {/* FLOATING METRIC OVERLAYS */}
+              
+              {/* Overlay 1: Live Status tag */}
+              <div className="absolute top-[12%] left-[8%] glass-panel px-3 py-1.5 rounded-xl border border-white/10 shadow-2xl flex items-center gap-2 transition-transform duration-300 hover:-translate-y-1">
+                <span className="flex h-2 w-2 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00D2FF] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00D2FF]"></span>
+                </span>
+                <span className="text-[9px] font-mono text-gray-300 uppercase tracking-widest leading-none">
+                  AI Pipeline: Active
+                </span>
+              </div>
+
+              {/* Overlay 2: Efficiency Metric Box */}
+              <div className="absolute bottom-[12%] right-[8%] glass-panel px-4 py-2.5 rounded-xl border border-white/10 shadow-2xl space-y-1 transition-transform duration-300 hover:-translate-y-1">
+                <span className="text-[8px] font-mono text-gray-500 uppercase tracking-wider block">Operational Scale</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-base font-display font-bold text-[#10B981]">+380%</span>
+                  <span className="text-[8px] text-gray-400 font-sans font-light">Efficiency Gain</span>
+                </div>
+              </div>
+
+              {/* Custom border highlight inside the container */}
+              <div className="absolute inset-0 border border-white/5 rounded-3xl pointer-events-none group-hover:border-white/15 transition-all duration-500" />
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Right Column: Copy & Stats */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.2, ease: [0.76, 0, 0.24, 1] }}
+          className="lg:col-span-6 space-y-8"
         >
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '1.5rem', fontFamily: 'monospace' }}>
-            Our Capabilities
-          </p>
-          <h2 className="font-display" style={{
-            fontSize: 'clamp(2rem, 4vw, 3.5rem)',
-            fontWeight: 700,
-            lineHeight: 1.1,
-            letterSpacing: '-0.02em',
-            color: '#fff',
-            marginBottom: '2rem',
-          }}>
-            Automating manual operations to unlock <span className="text-[#00D2FF]">exponential</span> scale.
-          </h2>
-          <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 16, lineHeight: 1.8, marginBottom: '3rem', maxWidth: 480 }}>
+          <div>
+            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', marginBottom: '1.5rem', fontFamily: 'monospace' }}>
+              Our Capabilities
+            </p>
+            <h2 className="font-display text-white text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-none uppercase">
+              Automating manual operations to unlock <span className="text-[#00D2FF]">exponential</span> scale.
+            </h2>
+          </div>
+          
+          <p className="text-gray-400 text-sm sm:text-base leading-relaxed font-sans font-light">
             FlowWorks AI operates at the intersection of machine intelligence, robust API architectures, and localized search growth. We deploy custom workflows that replace mechanical spreadsheet work with intelligent cloud actions.
           </p>
 
-          {/* Stats */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 gap-8 pt-4">
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.4 + i * 0.1 }}
+                className="space-y-1"
               >
-                <p className="font-display" style={{ fontSize: 'clamp(1.8rem, 3vw, 2.5rem)', fontWeight: 700, color: '#fff', letterSpacing: '-0.02em', marginBottom: 4 }}>
+                <p className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tight">
                   {stat.value}
                 </p>
-                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em', fontFamily: 'monospace' }}>
+                <p className="text-[10px] text-gray-500 font-mono tracking-wider uppercase leading-none">
                   {stat.label}
                 </p>
               </motion.div>
             ))}
           </div>
         </motion.div>
+
       </div>
     </section>
   );

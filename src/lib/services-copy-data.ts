@@ -21,6 +21,11 @@ export interface ComparisonItem {
   description: string;
 }
 
+export interface TechnicalSpecItem {
+  label: string;
+  detail: string;
+}
+
 export interface ServiceCopy {
   slug: string;
   seoTitle: string;
@@ -33,6 +38,7 @@ export interface ServiceCopy {
   widgetType: "chat" | "calculator";
   chatScript?: Message[];
   faqs: FAQItem[];
+  technicalSpecs: TechnicalSpecItem[];
 }
 
 export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
@@ -73,6 +79,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "Can an AI employee handle unstructured data like PDF invoices or handwritten text?", answer: "Yes. Leveraging advanced OCR and LLM multimodal vision, our AI employees extract data from scanned PDFs, spreadsheets, handwritten notes, and image logs, converting them into structured database values." },
       { question: "How long does it take to train and onboard a virtual employee?", answer: "Standard administrative AI employees can be configured, trained on your data pipelines, and launched in staging within 2 to 3 weeks. Full custom systems integrating legacy databases may take 4 to 6 weeks." },
       { question: "What happens if the AI employee encounters an unfamiliar error?", answer: "The system is built with fail-safes. If a transaction falls outside its trained rules or high confidence thresholds, the AI pauses execution, generates an incident ticket with complete logs, and routes it to a human supervisor." }
+    ],
+    technicalSpecs: [
+      { label: "Core Processing Engine", detail: "TypeScript, Python FastAPI microservices, LangGraph multi-agent orchestrator." },
+      { label: "Supported Model Providers", detail: "Claude 3.5 Sonnet, GPT-4o, and Llama 3.1 70B (fine-tuned & self-hosted on AWS EC2)." },
+      { label: "Security & Encryption", detail: "TLS 1.3 transit encryption, AES-256 resting data encryption, SOC-2 compliant hosting." },
+      { label: "Integration Interface", detail: "REST APIs, WebSockets for live logging, Slack App Bolt framework, custom browser automation engines." }
     ]
   },
   "ai-customer-support-agents": {
@@ -112,6 +124,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "What languages do the AI customer support agents support, and is the localization natural?", answer: "Our agents natively support over 95 languages, including Spanish, French, German, Mandarin, and Japanese. The translation is not a literal word-for-word translation; the LLM understands localized idioms, tone, and cultural nuances, delivering an empathetic and natural support experience tailored to each global demographic." },
       { question: "How long does it take to set up, test, and deploy a custom AI customer support agent?", answer: "For standard implementations utilizing existing knowledge bases (Notion, Zendesk, etc.), a fully functional agent can be trained and in staging within 5 to 7 business days. Custom integrations with proprietary APIs typically take 2 to 3 weeks. We mandate a rigorous automated testing phase to verify accuracy before routing live customer traffic." },
       { question: "How is this priced? Do you offer a subscription model or charge per ticket?", answer: "We offer a hybrid pricing model designed to align with your business value. Our plan includes a predictable monthly platform subscription that covers integration, security maintenance, and dashboard access, paired with a success-based cost per resolved ticket. You only pay for conversations that the AI agent successfully resolves without human intervention." }
+    ],
+    technicalSpecs: [
+      { label: "Natural Language Core", detail: "OpenAI GPT-4o and Anthropic Claude 3.5 Sonnet pipeline with dynamic context switching." },
+      { label: "Vector Search Platform", detail: "Pinecone Serverless DB utilizing cosine similarity queries for sub-100ms FAQ retrieval." },
+      { label: "PII Scrubbing Engine", detail: "Custom regex and Named Entity Recognition (NER) masking layer running on Node.js edge network nodes." },
+      { label: "Third Party Integrations", detail: "Zendesk, Salesforce Service Cloud, Intercom Webhooks, HubSpot CRM API, Twilio SMS Gateway." }
     ]
   },
   "ai-sales-agents": {
@@ -151,6 +169,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "How does the AI handle negative responses or opt-outs?", answer: "If a prospect requests removal, the AI agent instantly flags the contact as 'Opt-Out' in your CRM and adds them to a global suppression list, ensuring compliance." },
       { question: "Can the sales agent book meetings directly in our reps' calendars?", answer: "Yes. Using calendar integrations (HubSpot, Calendly, Cal.com), the agent directly coordinates open slots, checks availability, and books meetings." },
       { question: "What CRM systems do your sales agents support?", answer: "We provide native bidirectional integrations with HubSpot, Salesforce, Pipedrive, Close, and custom REST API structures." }
+    ],
+    technicalSpecs: [
+      { label: "Outbound Data Scrapers", detail: "Apollo.io API, LinkedIn Sales Navigator API, custom website content crawler (Playwright-based)." },
+      { label: "Inbox Infrastructure", detail: "Multi-domain cold email configuration with automated warm-up scripts via Smartlead/Instantly APIs." },
+      { label: "Spam Guard Filters", detail: "SpamAssassin pre-check simulators and dynamic syntax spinning to bypass Google/Microsoft filters." },
+      { label: "CRM Sync System", detail: "Bidirectional REST webhooks syncing live updates back to HubSpot, Salesforce, and Close." }
     ]
   },
   "ai-voice-agents": {
@@ -190,6 +214,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "What is the typical latency of a voice agent conversation?", answer: "We maintain a response latency of under 500 milliseconds. This mimics typical human response times, keeping the conversation fluid." },
       { question: "Is this compliant with US telephone regulation standards?", answer: "Yes. We strictly adhere to TCPA rules, FCC guidelines, and local outbound calling hours, incorporating automated consent checkups." },
       { question: "Can the AI voice agent transfer the call to a human agent?", answer: "Yes. When the caller asks for a supervisor or exhibits high frustration, the agent does a SIP transfer to your phone bank with a data payload summary." }
+    ],
+    technicalSpecs: [
+      { label: "Speech-to-Text (STT)", detail: "Deepgram Nova-2 with customized acoustic dictionaries for domain-specific terminology." },
+      { label: "Voice Synthesis Engine", detail: "ElevenLabs Reader API and Cartesia Sonic with custom clone voice architectures." },
+      { label: "SIP / VOIP Infrastructure", detail: "Twilio Media Streams connected to secure Asterisk PBX clusters, WebRTC protocol channels." },
+      { label: "Response Pipeline Latency", detail: "Network ingestion to audio playback latency optimized at a consistent 450ms." }
     ]
   },
   "ai-lead-generation-automation": {
@@ -221,6 +251,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "What data points are included in the prospect record?", answer: "Records include full name, corporate email, LinkedIn profile URL, phone line, company revenue, employee count, tech stack, and location details." },
       { question: "Can we filter prospects by specific tech stacks?", answer: "Yes. You can target companies using specific software solutions (e.g., Salesforce, Shopify, AWS, HubSpot) identified by script headers." },
       { question: "How does this integrate with CRM platforms?", answer: "We set up automated webhook relays that sync enriched lists directly into HubSpot, Salesforce, Pipedrive, or custom databases." }
+    ],
+    technicalSpecs: [
+      { label: "Scraping Platform", detail: "Distributed Playwright browser clusters running on dynamic proxy networks (BrightData/ScrapeOps)." },
+      { label: "Validation Protocols", detail: "Real-time SMTP handshake checks, MX record audits, and target domain catch-all query indicators." },
+      { label: "Enrichment Databases", detail: "Built-in integration bridges for Apollo, ZoomInfo, Hunter.io, BuiltWith, and Clearbit." },
+      { label: "Output Sync Frequency", detail: "Hourly database ingestion pipelines with automated duplicate check logic scripts." }
     ]
   },
   "ai-appointment-setting": {
@@ -260,6 +296,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "Can the setter handle follow-ups if a prospect drops out mid-conversation?", answer: "Yes. If a prospect stops responding during the booking flow, the AI sends a polite reminder follow-up SMS or email 24 hours later." },
       { question: "Does this support external booking tools like Calendly?", answer: "Yes. We integrate with Calendly, Cal.com, HubSpot Meetings, Google Calendar, and Microsoft Outlook." },
       { question: "How does the system prevent spam or low-quality bookings?", answer: "The AI verifies email domains and reviews lead profiles against your target customer checklist before confirming calendar events." }
+    ],
+    technicalSpecs: [
+      { label: "Calendar Protocols", detail: "Caldav protocol integrations, Google Calendar REST API, Microsoft Graph API." },
+      { label: "Scheduling Engine", detail: "Round-robin team allocation algorithms with custom capacity weighting and timezone lock parameters." },
+      { label: "Nurture Trigger Engine", detail: "Timed SMS and email dispatchers powered by Twilio SMS and SendGrid API gateways." },
+      { label: "Qualification Matrix", detail: "Dynamic LLM evaluation prompt templates validating target company metrics before slot selection." }
     ]
   },
   "ai-chatbot-development": {
@@ -299,6 +341,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "Can the chatbot pull real-time database details like order statuses?", answer: "Yes. By connecting securely to your internal ERP or database APIs, the chatbot can query and display real-time order and account information." },
       { question: "What document formats does the system support?", answer: "We support PDF, DOCX, TXT, Markdown, Notion Pages, Zendesk Help Center links, Confluence Spaces, and SQL/NoSQL databases." },
       { question: "How do you test the chatbot for accuracy before launch?", answer: "We run automated validation tests against custom Q&A evaluation datasets, scoring responses on factual accuracy and brand alignment." }
+    ],
+    technicalSpecs: [
+      { label: "Vector Embeddings Model", detail: "text-embeddings-3-large (OpenAI) and Cohere Embed v3 for high-density semantic vectorization." },
+      { label: "Document Chunking Parser", detail: "Semantic page-aware chunk dividers utilizing markdown structure headers to keep block relevance." },
+      { label: "Guardrail Framework", detail: "NeMo Guardrails (NVIDIA) and custom classification layers detecting prompt injections and off-topic chat." },
+      { label: "Frontend Widget Integration", detail: "Next.js Web Components, React hooks, iframe wrappers, and secure shadow DOM layouts." }
     ]
   },
   "crm-automation": {
@@ -330,6 +378,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "Can we automate invoicing directly from CRM status changes?", answer: "Yes. We configure pipelines that trigger QuickBooks, Stripe, or Xero invoice creation the moment a deal is moved to 'Closed-Won'." },
       { question: "How do you keep our data secure during transfer?", answer: "All data transfers use HTTPS encryption, OAuth 2.0 authentication, and secure webhook sign-offs." },
       { question: "Do you charge per user seat for CRM integration?", answer: "No. We build custom API automation pipelines for your company, meaning you pay for setup and maintenance without per-seat licenses." }
+    ],
+    technicalSpecs: [
+      { label: "CRM Developer SDKs", detail: "Salesforce Apex/GraphQL APIs, HubSpot Node.js SDK Client API." },
+      { label: "Data Pipeline Bridge", detail: "Serverless Node.js endpoints hosted on AWS Lambda executing dynamic field-map translations." },
+      { label: "Data Quality Auditor", detail: "Hourly deduplication scripts running string Jaro-Winkler metric comparisons." },
+      { label: "Sync Latency Metrics", detail: "Webhooks triggering updates in under 2 seconds across external systems." }
     ]
   },
   "workflow-automation": {
@@ -361,6 +415,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "What happens if an API endpoint goes down?", answer: "Our workflows feature automatic retries, queue buffers, error logs, and immediate alerts via Slack or SMS to prevent data loss." },
       { question: "How do you ensure data security during transfer?", answer: "We encrypt all data in transit using TLS 1.3, store API credentials in secure key vaults, and strictly follow SOC 2 guidelines." },
       { question: "Do we retain full ownership of the automation scripts?", answer: "Yes. Once built and deployed, you own the intellectual property and code assets, and can host them on your own cloud account." }
+    ],
+    technicalSpecs: [
+      { label: "Workflow Engines", detail: "Make.com enterprise grids, Zapier Developer Platforms, and Node.js backend controllers." },
+      { label: "File Extraction (OCR)", detail: "Amazon Textract and Google Document AI APIs connected to custom LLM extraction parsers." },
+      { label: "Fail-Safe Infrastructure", detail: "Queue systems (RabbitMQ/SQS) logging transactions and handling retries automatically." },
+      { label: "Custom Connector APIs", detail: "Secure backend middleware proxies transforming legacy XML SOAP payloads to clean REST JSON formats." }
     ]
   },
   "business-process-automation": {
@@ -392,6 +452,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "Can the system process approvals through Slack or Microsoft Teams?", answer: "Yes. We configure interactive buttons in Slack or Teams so managers can approve invoices or requests with a single click." },
       { question: "Does this require replacing our existing software tools?", answer: "No. We build automation layers that sit on top of and connect your existing platforms (ERP, HRIS, CRM, Finance) using secure APIs." },
       { question: "What is the average ROI timeline for BPA deployment?", answer: "Most enterprises recover their setup costs within 3 to 6 months by reducing manual admin time and processing errors." }
+    ],
+    technicalSpecs: [
+      { label: "Enterprise Orchestration", detail: "Node.js Serverless architecture, AWS Step Functions for complex state machine routing." },
+      { label: "Document Signature APIs", detail: "DocuSign eSignature REST API, HelloSign SDK integration triggers." },
+      { label: "Database Core Sync", detail: "SQL Server, PostgreSQL, SAP/Oracle ERP connector middleware wrappers." },
+      { label: "Audit & Log Trails", detail: "SOC-2 compliant event log grids recording user tokens and transaction states in immutable files." }
     ]
   },
   "ai-consulting": {
@@ -423,6 +489,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "How do you evaluate AI feasibility for our workflows?", answer: "We analyze criteria like task frequency, data structure consistency, API access options, compliance requirements, and potential cost savings." },
       { question: "Can you help our internal development team build the solution?", answer: "Yes. We provide complete technical blueprints, system architecture models, and developer guides to support your team." },
       { question: "Do you sign Non-Disclosure Agreements (NDAs) before discovery?", answer: "Yes. We mandate mutual NDAs before reviewing any internal operational data or software stacks." }
+    ],
+    technicalSpecs: [
+      { label: "Audit Delivery Outputs", detail: "Figma UX wireframe layouts, structured database models, API path blueprints, and technical stack outlines." },
+      { label: "Compliance Focus Areas", detail: "HIPAA Security Standards, GDPR Data Handling controls, SOC 2 Type II criteria." },
+      { label: "Technical Frameworks", detail: "Private VPC deployments, Zero LLM data training structures, strict PII redact boundaries." },
+      { label: "Cost Projection Analytics", detail: "Structured annual cloud hosting estimates, model tokens forecasts, support SLA costs calculations." }
     ]
   },
   "custom-ai-solutions": {
@@ -454,6 +526,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "What vector databases do you support?", answer: "We support pgvector (PostgreSQL), Pinecone, Milvus, Qdrant, and Weaviate database structures." },
       { question: "How do you protect data security during training?", answer: "All training is done on private cloud servers. Your datasets are encrypted at rest and in transit, and are never shared with public APIs." },
       { question: "How long does it take to deploy a custom fine-tuned model?", answer: "A typical fine-tuning project, including database cleaning, training runs, and testing, takes 4 to 8 weeks." }
+    ],
+    technicalSpecs: [
+      { label: "Fine-Tuning Frameworks", detail: "PyTorch, Hugging Face Transformers, QLoRA (Quantized Low-Rank Adaptation) libraries." },
+      { label: "Hosted GPU Infrastructure", detail: "AWS EC2 g5 instances (NVIDIA A10G GPUs), RunPod container services." },
+      { label: "Vector Index Core", detail: "HNSW (Hierarchical Navigable Small World) index settings in Pinecone and pgvector." },
+      { label: "Pipeline Security Control", detail: "Data cleaning scripts scrubbing PII columns before model fine-tune ingestion runs." }
     ]
   },
   "website-design-and-development": {
@@ -485,6 +563,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "Can we connect the website to our internal tools and CRM?", answer: "Yes. We build secure API integrations that connect your site to HubSpot, Salesforce, Stripe, and custom backend systems." },
       { question: "What content management systems (CMS) do you support?", answer: "We support headless platforms like Sanity, Contentful, and Strapi, as well as classic databases and serverless CMS configurations." },
       { question: "How long does a custom web application project take?", answer: "A custom web application project, including design, coding, testing, and deployment, typically takes 4 to 8 weeks." }
+    ],
+    technicalSpecs: [
+      { label: "Framework & Architecture", detail: "Next.js 15 App Router, React 19 Server Components, TypeScript compilation." },
+      { label: "Styling & Motion Core", detail: "CSS Modules, Framer Motion for animations, custom SVG layouts." },
+      { label: "Content Delivery Systems", detail: "Sanity.io Headless CMS, Vercel Edge Networks, Cloudflare CDN caches." },
+      { label: "Deployment Engine", detail: "Vercel serverless functions, Git-integrated automated CI/CD deployments." }
     ]
   },
   "seo-services": {
@@ -516,6 +600,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "What schema types do you implement?", answer: "We implement structured Service, Product, LocalBusiness, FAQ, Breadcrumb, and Article schemas matching Schema.org guidelines." },
       { question: "Do you write blog content or focus on technical SEO?", answer: "We focus on technical site optimization, programmatic page setups, and search architecture rather than basic copywriting." },
       { question: "How long does it take to see organic traffic growth?", answer: "Technical and programmatic updates usually show search index indexing within 3 to 6 weeks, with steady traffic growth over the following months." }
+    ],
+    technicalSpecs: [
+      { label: "Data Structure Formats", detail: "JSON-LD structured schema inject arrays (matches Schema.org vocabulary)." },
+      { label: "Page Generation Engine", detail: "Next.js generateStaticParams configuring dynamic routing loops, Node.js data compilers." },
+      { label: "Performance Optimizations", detail: "Lighthouse mobile optimization settings: responsive images, code bundle splits, asset caching." },
+      { label: "Search Index Integration", detail: "Google Indexing API triggers automatically pushing updates when page modifications compile." }
     ]
   },
   "app-design-and-development": {
@@ -547,6 +637,12 @@ export const SERVICES_COPY_DATA: Record<string, ServiceCopy> = {
       { question: "How do you handle App Store and Play Store approvals?", answer: "We manage the entire submission process, including metadata setup, screenshots, review guidelines, and deployment approval." },
       { question: "What database systems do you use for mobile data?", answer: "For local databases, we use SQLite or WatermelonDB. For cloud databases, we build secure PostgreSQL or Firebase connections." },
       { question: "How long does a custom mobile application project take?", answer: "A custom mobile app project, from design to app store launch, typically takes 8 to 12 weeks." }
+    ],
+    technicalSpecs: [
+      { label: "Mobile Core Framework", detail: "React Native, Expo SDK Platforms, TypeScript compilation." },
+      { label: "Local Database Cache", detail: "SQLite DB combined with WatermelonDB for offline document updates." },
+      { label: "Biometric Integration", detail: "Expo Local Authentication (FaceID/TouchID API hooks)." },
+      { label: "Notification Channels", detail: "Firebase Cloud Messaging (FCM), Apple Push Notification service (APNs)." }
     ]
   }
 };

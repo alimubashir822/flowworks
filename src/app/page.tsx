@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Preloader from '@/components/Preloader';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
@@ -5,13 +6,18 @@ import WeAreSection from '@/components/WeAreSection';
 import ClientsMarquee from '@/components/ClientsMarquee';
 import ServicesSection from '@/components/ServicesSection';
 import SelectedWorks from '@/components/SelectedWorks';
-import ReelsSection from '@/components/ReelsSection';
-import WorksGrid from '@/components/WorksGrid';
 import BlogSection from '@/components/BlogSection';
 import Footer from '@/components/Footer';
-import ExitIntentPopup from '@/components/ExitIntentPopup';
-import MultiStepLeadForm from '@/components/MultiStepLeadForm';
 import SEO from '@/components/seo';
+import CTASection from '@/components/CTASection';
+
+export const metadata: Metadata = {
+  title: "FlowWorks — Premium AI Automation & Custom Software Development Agency",
+  description: "FlowWorks builds custom AI agents, automated workflows, custom software, mobile apps, and programmatic SEO systems that scale businesses.",
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default function Home() {
   const faqs = [
@@ -32,11 +38,12 @@ export default function Home() {
   return (
     <>
       <SEO type="Organization" />
+      <SEO type="LocalBusiness" />
+      <SEO type="WebSite" />
       <SEO type="FAQ" faqs={faqs} />
       
       <Preloader />
       <Navbar />
-      <ExitIntentPopup />
       
       <main>
         <HeroSection />
@@ -44,28 +51,8 @@ export default function Home() {
         <ClientsMarquee />
         <ServicesSection />
         <SelectedWorks />
-        <ReelsSection />
-        <WorksGrid />
         
-        {/* Dynamic Multi-Step Lead Section */}
-        <section id="lead-form-section" className="bg-dark-grid py-24 px-6 border-t border-white/5 relative">
-          <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-[#8B5CF6]/5 rounded-full blur-[130px] pointer-events-none" />
-          <div className="max-w-4xl mx-auto text-center space-y-4 mb-12 relative z-10">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#00D2FF]">
-              Get Started
-            </span>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-white uppercase">
-              Schedule Your AI Operations Audit
-            </h2>
-            <p className="text-sm text-gray-400 max-w-xl mx-auto leading-relaxed">
-              Fill out our interactive multi-step audit to outline your systems and discover high-value automation potential.
-            </p>
-          </div>
-          <div className="relative z-10">
-            <MultiStepLeadForm />
-          </div>
-        </section>
-
+        <CTASection />
 
         <BlogSection />
       </main>

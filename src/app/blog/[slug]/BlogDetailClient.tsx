@@ -2,9 +2,129 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Clock, Calendar, ChevronRight, Share2, Link as LinkIcon, Check, Mail, CheckCircle2 } from "lucide-react";
 import { BlogPost } from "@/lib/blog-data";
 import { motion } from "framer-motion";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import AISummary from "@/components/AISummary";
+import AIComparisonTable from "@/components/AIComparisonTable";
+import AIDefinitionList from "@/components/AIDefinitionList";
+import { getRelationsForSlug } from "@/lib/seo-relations";
+import RelatedServices from "@/components/RelatedServices";
+import RelatedResources from "@/components/RelatedResources";
+import CTASection from "@/components/CTASection";
+import { injectContextualLinks } from "@/lib/contextual-linker";
+
+const getGeoData = (slug: string) => {
+  switch (slug) {
+    case "ai-agents-replacing-admin-tasks":
+      return {
+        tldr: "Repetitive administrative tasks like CRM data entry, invoicing, and support routing are being automated by autonomous AI agents. Unlike rigid trigger-based systems, these agents leverage advanced reasoning frameworks (like LangGraph) to handle unstructured inputs and edge cases.",
+        takeaways: [
+          "Autonomous AI agents replace brittle rule-based APIs",
+          "Human-in-the-Loop gates ensure transaction security",
+          "10x speedup in document reconciliation latency",
+          "SOC-2 and GDPR compliance protocols apply"
+        ],
+        insight: {
+          author: "Marcus Vance",
+          role: "Founder & Chief AI Architect",
+          quote: "We design our agents with stateful graphs. This ensures they operate within clear business boundaries while retaining the flexibility of LLM reasoning."
+        },
+        stats: [
+          { label: "Admin Speedup", value: "10x" },
+          { label: "Error Reductions", value: "94%" },
+          { label: "Reclaim Rate", value: "24h/wk" }
+        ],
+        comparison: {
+          title: "Trigger Workflows vs Autonomous Agents",
+          headers: ["Feature", "Legacy Trigger Workflows", "Autonomous AI Agents"],
+          rows: [
+            ["Handling unstructured files", "Fails on syntax or formatting changes", "Uses vision APIs to parse invoices, images, and text"],
+            ["Decision-making & Loops", "Linear paths only, breaks on failure", "Can loop back, verify database records, and self-correct"],
+            ["Human Collaboration", "Throws obscure logs or fails silent", "Drafts approvals and alerts team members via Slack/Teams"],
+            ["Implementation Strategy", "Quick setup, fragile maintenance", "Bespoke engineering, robust and self-healing"]
+          ]
+        },
+        definitions: [
+          { term: "LangGraph", definition: "A stateful orchestration framework for building multi-agent systems using directed acyclic graphs." },
+          { term: "Human-in-the-Loop (HITL)", definition: "A design pattern that halts automated workflows to require human confirmation before high-risk actions (e.g. money transits)." },
+          { term: "Multimodal LLMs", definition: "Models capable of processing multiple formats of input (e.g. reading invoice images and writing JSON data)." }
+        ]
+      };
+    case "step-by-step-programmatic-seo":
+      return {
+        tldr: "Programmatic SEO allows scaling search traffic by automatically generating high-quality localized or niche landings from structured datasets. Modern frameworks leverage LLM semantic cleaning to ensure content is fully unique, readable, and structured.",
+        takeaways: [
+          "Programmatic SEO scales traffic by automatically generating thousands of pages",
+          "Semantic content templates avoid duplicate content indexing penalties",
+          "Requires robust database queries and caching to maintain site speed",
+          "Yields an average 3.2x increase in conversions and leads"
+        ],
+        insight: {
+          author: "Darnell Mercer",
+          role: "Director of Programmatic Growth",
+          quote: "The key to programmatic SEO is content quality. Search engines and AI assistants prioritize high-value unique pages, not templated keyword stuffing."
+        },
+        stats: [
+          { label: "Traffic Scale", value: "50M+ Views" },
+          { label: "Lead Growth", value: "3.2x" },
+          { label: "Build Latency", value: "Sub-second" }
+        ],
+        comparison: {
+          title: "Manual Page Creation vs Programmatic SEO",
+          headers: ["Metric", "Manual Page Creation", "Programmatic SEO Systems"],
+          rows: [
+            ["Speed to Scale", "Weeks/Months to write individual pages", "Thousands of pages generated in minutes"],
+            ["Keyword Coverage", "Limited to broad, high-volume terms", "Exhaustive long-tail coverage across cities and services"],
+            ["Content Quality Control", "High human edit time needed per page", "Automated syntax checks and semantic variations"],
+            ["Index Rate Success", "Depends on link building and page layout", "Highly structured HTML, metadata templates, and sitemaps"]
+          ]
+        },
+        definitions: [
+          { term: "Programmatic SEO", definition: "A technique that generates large volumes of high-quality landing pages from structured databases to target long-tail search queries." },
+          { term: "Long-Tail Keywords", definition: "Highly specific search terms (e.g., 'CRM automation services in Chicago') that convert at a much rate." },
+          { term: "Semantic Templates", definition: "Dynamic text frameworks that use AI-driven sentence structures to ensure each generated page reads uniquely and avoids copy penalties." }
+        ]
+      };
+    default:
+      return {
+        tldr: "Bespoke custom software gives enterprises full control over code architecture, database security, and custom workflows, completely bypassing monthly licensing seat taxes and SaaS integration bottlenecks.",
+        takeaways: [
+          "Custom codebases eliminate monthly seat licensing taxes",
+          "You retain 100% intellectual property ownership and data controls",
+          "Direct native API connections avoid third-party middleware latency",
+          "Highly optimized layouts achieve score 98+ on Lighthouse metrics"
+        ],
+        insight: {
+          author: "Elena Rostova",
+          role: "Head of Custom Software Development",
+          quote: "Custom software is an asset that appreciates. Instead of renting SaaS configurations that you don't own, custom software builds permanent value."
+        },
+        stats: [
+          { label: "Seat Licensing Tax", value: "$0" },
+          { label: "IP Ownership", value: "100%" },
+          { label: "Performance Score", value: "98+" }
+        ],
+        comparison: {
+          title: "Off-the-shelf SaaS vs Bespoke Custom Software",
+          headers: ["Feature", "Off-the-shelf SaaS Platform", "Bespoke Custom Software"],
+          rows: [
+            ["Licensing Costs", "Expensive monthly seat tax scaling with team size", "Zero licensing fees, pay only direct cloud hosting"],
+            ["Data Privacy & Security", "Hosted on vendor database, limited VPC options", "100% private cloud environments, private DB controls"],
+            ["API Integrations", "Restricted by vendor modules, legacy lag", "Direct, native connections to any CRM, database, or API"],
+            ["Intellectual Property", "None, renting a generic configuration", "Bespoke asset owned 100% by your enterprise"]
+          ]
+        },
+        definitions: [
+          { term: "Virtual Private Cloud (VPC)", definition: "A private cloud computing environment that keeps your databases completely isolated from public access." },
+          { term: "Seat Tax", definition: "The SaaS pricing model that charges enterprises per user license, heavily penalizing scaling teams." },
+          { term: "Intellectual Property (IP)", definition: "The proprietary code, structures, and systems that represent permanent enterprise assets." }
+        ]
+      };
+  }
+};
 
 interface BlogDetailClientProps {
   post: BlogPost;
@@ -23,6 +143,9 @@ export default function BlogDetailClient({ post, relatedPosts }: BlogDetailClien
       setShareUrl(window.location.href);
     }
   }, []);
+
+  const geoData = useMemo(() => getGeoData(post.slug), [post.slug]);
+  const relations = useMemo(() => getRelationsForSlug(post.slug), [post.slug]);
 
   // Parse headings and format content body dynamically
   const { formattedContent, headings } = useMemo(() => {
@@ -53,8 +176,10 @@ export default function BlogDetailClient({ post, relatedPosts }: BlogDetailClien
       .replace(/<li>/g, '<li class="text-sm sm:text-base">')
       .replace(/<strong>/g, '<strong class="text-[#00D2FF] font-semibold">');
 
+    const linkedHtml = injectContextualLinks(styledHtml);
+
     return {
-      formattedContent: styledHtml,
+      formattedContent: linkedHtml,
       headings: list,
     };
   }, [post.content]);
@@ -101,18 +226,12 @@ export default function BlogDetailClient({ post, relatedPosts }: BlogDetailClien
 
   return (
     <div className="max-w-[1400px] mx-auto px-6 space-y-12">
-      {/* Breadcrumbs */}
-      <nav className="flex items-center gap-2 text-[10px] font-mono text-gray-500 uppercase tracking-wider">
-        <Link href="/" className="hover:text-[#00D2FF] transition-colors cursor-none">
-          Home
-        </Link>
-        <ChevronRight className="w-3.5 h-3.5" />
-        <Link href="/blog" className="hover:text-[#00D2FF] transition-colors cursor-none">
-          Blog
-        </Link>
-        <ChevronRight className="w-3.5 h-3.5" />
-        <span className="text-gray-400 truncate max-w-[200px] sm:max-w-xs">{post.title}</span>
-      </nav>
+      <Breadcrumbs
+        items={[
+          { name: "Blog", item: "/blog" },
+          { name: post.title, item: `/blog/${post.slug}` },
+        ]}
+      />
 
       {/* Main Container Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -137,11 +256,15 @@ export default function BlogDetailClient({ post, relatedPosts }: BlogDetailClien
               </span>
               <span className="h-4 w-[1px] bg-white/10 hidden sm:block" />
               <div className="flex items-center gap-2">
-                <img
-                  src={post.author.avatar}
-                  alt={post.author.name}
-                  className="w-6 h-6 rounded-full object-cover border border-white/10"
-                />
+                <div className="relative w-6 h-6 rounded-full overflow-hidden border border-white/10 shrink-0">
+                  <Image
+                    src={post.author.avatar}
+                    alt={post.author.name}
+                    fill
+                    sizes="24px"
+                    className="object-cover"
+                  />
+                </div>
                 <span className="text-gray-400">{post.author.name} — {post.author.role}</span>
               </div>
             </div>
@@ -149,15 +272,57 @@ export default function BlogDetailClient({ post, relatedPosts }: BlogDetailClien
 
           {/* Featured Image */}
           <div className="aspect-[16/9] rounded-2xl overflow-hidden relative border border-white/5 shadow-2xl">
-            <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+            <Image
+              src={post.image}
+              alt={post.title}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 800px"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-10" />
           </div>
+
+          {/* AI-powered Search Overview Summary Block */}
+          {geoData && (
+            <AISummary
+              tldr={geoData.tldr}
+              takeaways={geoData.takeaways}
+              insight={geoData.insight}
+              stats={geoData.stats}
+            />
+          )}
 
           {/* Render parsed HTML */}
           <div
             className="prose prose-invert max-w-none text-gray-300 leading-relaxed text-sm sm:text-base pt-4 space-y-6"
             dangerouslySetInnerHTML={{ __html: formattedContent }}
           />
+
+          {/* AI-powered Search Table and Definitions */}
+          {geoData && geoData.comparison && (
+            <div className="mt-10">
+              <AIComparisonTable
+                title={geoData.comparison.title}
+                headers={geoData.comparison.headers}
+                rows={geoData.comparison.rows}
+              />
+            </div>
+          )}
+
+          {geoData && geoData.definitions && geoData.definitions.length > 0 && (
+            <div className="mt-10">
+              <AIDefinitionList definitions={geoData.definitions} />
+            </div>
+          )}
+
+          {/* Dynamic SEO Internal Linking Sections */}
+          {relations && (
+            <div className="mt-12 pt-12 border-t border-white/5 space-y-12 animate-fade-in">
+              <RelatedServices relatedSlugs={relations.services} />
+              <RelatedResources resources={relations.resources} />
+            </div>
+          )}
 
           {/* Share Tools (Mobile) */}
           <div className="lg:hidden p-5 glass-panel rounded-2xl border border-white/5 space-y-4">
@@ -327,33 +492,7 @@ export default function BlogDetailClient({ post, relatedPosts }: BlogDetailClien
       </div>
 
       {/* Conversion Bottom CTA */}
-      <section className="glass-panel p-8 sm:p-12 rounded-3xl border border-white/5 overflow-hidden relative mt-16">
-        <div className="absolute -right-24 -bottom-24 w-80 h-80 bg-[#00D2FF]/5 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute -left-24 -top-24 w-80 h-80 bg-[#8B5CF6]/5 rounded-full blur-[100px] pointer-events-none" />
-
-        <div className="max-w-3xl mx-auto text-center space-y-6 relative">
-          <h2 className="font-display text-2xl sm:text-4xl font-bold uppercase text-white leading-tight">
-            Ready to Automate Your Operations?
-          </h2>
-          <p className="text-sm text-gray-400 max-w-xl mx-auto">
-            We architect and deploy custom virtual workers, integration pipelines, and custom software tailored to your specific protocols.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Link
-              href="/"
-              className="px-8 py-4 bg-gradient-to-r from-[#00D2FF] to-[#8B5CF6] hover:from-[#00c0eb] hover:to-[#7c4ee4] rounded-xl text-black font-semibold shadow-lg shadow-[#00D2FF]/25 transition-all cursor-none"
-            >
-              Schedule Discovery Call
-            </Link>
-            <Link
-              href="/"
-              className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white font-semibold transition-all cursor-none"
-            >
-              Explore Services
-            </Link>
-          </div>
-        </div>
-      </section>
+      <CTASection />
 
       {/* Related Articles Grid */}
       {relatedPosts.length > 0 && (
@@ -371,13 +510,15 @@ export default function BlogDetailClient({ post, relatedPosts }: BlogDetailClien
                 <div className="space-y-4">
                   {/* Image */}
                   <div className="aspect-[16/10] rounded-xl overflow-hidden relative border border-white/5">
-                    <img
+                    <Image
                       src={post.image}
                       alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
-                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-black/80 border border-[#00D2FF]/20 text-[10px] font-mono text-[#00D2FF] uppercase tracking-wider">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent z-10 pointer-events-none" />
+                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-black/80 border border-[#00D2FF]/20 text-[10px] font-mono text-[#00D2FF] uppercase tracking-wider z-20">
                       {post.category}
                     </span>
                   </div>
@@ -401,11 +542,15 @@ export default function BlogDetailClient({ post, relatedPosts }: BlogDetailClien
                 {/* Footer Link */}
                 <div className="pt-4 mt-4 border-t border-white/5 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <img
-                      src={post.author.avatar}
-                      alt={post.author.name}
-                      className="w-7 h-7 rounded-full object-cover border border-white/10"
-                    />
+                    <div className="relative w-7 h-7 rounded-full overflow-hidden border border-white/10 shrink-0">
+                      <Image
+                        src={post.author.avatar}
+                        alt={post.author.name}
+                        fill
+                        sizes="28px"
+                        className="object-cover"
+                      />
+                    </div>
                     <span className="text-[10px] font-mono text-gray-400">{post.author.name}</span>
                   </div>
                   <Link

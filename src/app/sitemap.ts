@@ -1,6 +1,9 @@
 import { MetadataRoute } from "next";
 import { SERVICES, STATES, CITIES } from "../lib/location-data";
 import { BLOG_POSTS } from "../lib/blog-data";
+import { INDUSTRIES_DATA } from "../lib/industry-data";
+import { TECHNOLOGIES } from "../lib/programmatic-seo";
+
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://flowworks.ai";
@@ -49,6 +52,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    },
   ];
 
 
@@ -95,5 +104,51 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  return [...coreRoutes, ...blogRoutes, ...serviceRoutes, ...stateRoutes, ...cityRoutes];
+  // PSEO Location routes
+  const pseoLocationRoutes: MetadataRoute.Sitemap = [];
+  const locationServices = ["ai-automation-services", "ai-agent-development", "software-development"];
+  locationServices.forEach((serviceSlug) => {
+    Object.keys(CITIES).forEach((cityKey) => {
+      pseoLocationRoutes.push({
+        url: `${baseUrl}/${serviceSlug}-in-${cityKey}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+      });
+    });
+  });
+
+  // PSEO Industry routes
+  const pseoIndustryRoutes: MetadataRoute.Sitemap = [];
+  const industryServices = ["ai-automation", "ai-agents"];
+  industryServices.forEach((serviceSlug) => {
+    INDUSTRIES_DATA.forEach((ind) => {
+      pseoIndustryRoutes.push({
+        url: `${baseUrl}/${serviceSlug}-for-${ind.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+      });
+    });
+  });
+
+  // PSEO Technology routes
+  const pseoTechRoutes: MetadataRoute.Sitemap = Object.keys(TECHNOLOGIES).map((techKey) => ({
+    url: `${baseUrl}/${techKey}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
+
+  return [
+    ...coreRoutes,
+    ...blogRoutes,
+    ...serviceRoutes,
+    ...stateRoutes,
+    ...cityRoutes,
+    ...pseoLocationRoutes,
+    ...pseoIndustryRoutes,
+    ...pseoTechRoutes
+  ];
 }
+

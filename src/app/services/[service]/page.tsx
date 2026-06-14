@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import MultiStepLeadForm from "@/components/MultiStepLeadForm";
+import CTASection from "@/components/CTASection";
 import SEO from "@/components/seo";
 import { SERVICES, STATES, CITIES } from "@/lib/location-data";
 import { SERVICES_COPY_DATA } from "@/lib/services-copy-data";
@@ -29,8 +29,14 @@ import {
 import ChatSimulation from "@/components/ChatSimulation";
 import RoiCalculator from "@/components/RoiCalculator";
 import FAQAccordion from "@/components/FAQAccordion";
+import AISummary from "@/components/AISummary";
+import AIComparisonTable from "@/components/AIComparisonTable";
+import { getRelationsForSlug } from "@/lib/seo-relations";
+import RelatedIndustries from "@/components/RelatedIndustries";
+import RelatedResources from "@/components/RelatedResources";
+import { injectContextualLinks } from "@/lib/contextual-linker";
 
-const getIcon = (name: string) => {
+const getIcon = (name: string): React.ComponentType<any> => {
   switch (name) {
     case "Settings": return Settings;
     case "Zap": return Zap;
@@ -49,6 +55,38 @@ const getIcon = (name: string) => {
     case "MessageSquare": return MessageSquare;
     default: return Zap;
   }
+};
+
+const getServiceGeoData = (serviceName: string, serviceSlug: string) => {
+  return {
+    tldr: `For companies seeking custom operational scale, FlowWorks deploys bespoke ${serviceName} solutions that operate natively within private architectures. By integrating stateful pipelines tailored to company protocols, we eliminate third-party SaaS seat licenses and ensure strict data compliance.`,
+    takeaways: [
+      `Eliminates monthly user license fees with 100% proprietary code ownership.`,
+      `Reduces execution latencies from minutes to sub-second API handshakes.`,
+      `Protects data integrity through automated PII scrubbing and custom VPC nodes.`,
+      `Provides custom dashboard UI widgets tailored exactly to internal workflows.`
+    ],
+    insight: {
+      author: "Marcus Vance",
+      role: "Chief AI Architect",
+      quote: `Off-the-shelf SaaS locks you into rigid modules. Custom ${serviceName} engineering builds a permanent corporate asset that scales with your team size without cost multipliers.`
+    },
+    stats: [
+      { label: "IP Ownership", value: "100%" },
+      { label: "License Costs", value: "$0" },
+      { label: "Compliance Rate", value: "100%" }
+    ],
+    comparison: {
+      title: `Off-the-shelf SaaS vs Bespoke ${serviceName}`,
+      headers: ["Metric", "Off-the-shelf SaaS Platform", `Bespoke FlowWorks ${serviceName}`],
+      rows: [
+        ["Code & IP Ownership", "Rented monthly, vendor holds proprietary rights", "100% owned by your enterprise as a permanent asset"],
+        ["Data Privacy & Security", "Hosted on vendor database, multi-tenant risk", "Private cloud database isolation, VPC endpoints"],
+        ["Seat Tax Escalation", "Pricing scales per user license, penalizing growth", "Zero licensing seat fees, flat hosting costs"],
+        ["Integration Flexibility", "Brittle API trigger actions, rigid workflows", "Stateful orchestration built for your exact protocols"]
+      ]
+    }
+  };
 };
 
 interface Props {
@@ -119,6 +157,8 @@ export default async function ServicePage({ params }: Props) {
   }
 
   const copy = SERVICES_COPY_DATA[serviceSlug];
+  const geoData = getServiceGeoData(service.name, service.slug);
+  const relations = getRelationsForSlug(serviceSlug);
 
   // If we have custom detailed copywriting, render the premium custom layout
   if (copy) {
@@ -210,9 +250,10 @@ export default async function ServicePage({ params }: Props) {
                   copy.heroHook
                 )}
               </h1>
-              <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed font-sans font-light">
-                {copy.heroSubhead}
-              </p>
+              <p 
+                className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed font-sans font-light"
+                dangerouslySetInnerHTML={{ __html: injectContextualLinks(copy.heroSubhead) }}
+              />
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                 <Link
                   href="#lead-form-section"
@@ -228,6 +269,18 @@ export default async function ServicePage({ params }: Props) {
                 </Link>
               </div>
             </section>
+
+            {/* AI Search Engine Optimization Summary */}
+            {geoData && (
+              <div className="max-w-4xl mx-auto">
+                <AISummary
+                  tldr={geoData.tldr}
+                  takeaways={geoData.takeaways}
+                  insight={geoData.insight}
+                  stats={geoData.stats}
+                />
+              </div>
+            )}
 
             {/* Section 2: The Bottleneck vs. The Breakthrough */}
             <section className="space-y-12">
@@ -277,6 +330,17 @@ export default async function ServicePage({ params }: Props) {
               </div>
             </section>
 
+            {/* AI Comparison Table comparing Custom vs SaaS */}
+            {geoData && geoData.comparison && (
+              <div className="max-w-4xl mx-auto">
+                <AIComparisonTable
+                  title={geoData.comparison.title}
+                  headers={geoData.comparison.headers}
+                  rows={geoData.comparison.rows}
+                />
+              </div>
+            )}
+
             {/* Section 3: Core Capabilities */}
             <section className="space-y-12">
               <div className="text-center space-y-2 max-w-xl mx-auto">
@@ -301,6 +365,25 @@ export default async function ServicePage({ params }: Props) {
                 })}
               </div>
             </section>
+
+            {/* Section 3.5: Technical Specifications */}
+            {copy.technicalSpecs && copy.technicalSpecs.length > 0 && (
+              <section className="space-y-12 border-t border-white/5 pt-12">
+                <div className="text-center space-y-2 max-w-xl mx-auto">
+                  <h2 className="font-display text-3xl font-bold text-white uppercase tracking-tight">Technical Specifications</h2>
+                  <p className="text-xs font-mono uppercase tracking-widest text-[#8B5CF6]">Integration Architecture & Stack Details</p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                  {copy.technicalSpecs.map((spec, idx) => (
+                    <div key={idx} className="glass-panel p-6 rounded-xl border border-white/5 space-y-2 hover:border-[#8B5CF6]/30 transition-all duration-300">
+                      <span className="block text-xs font-mono text-[#00D2FF] uppercase tracking-wider">{spec.label}</span>
+                      <p className="text-sm text-gray-300 font-sans leading-relaxed">{spec.detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Section 4 & ROI Calculator / Simulation Widget */}
             <section id="roi-calculator-section" className="space-y-12">
@@ -384,16 +467,16 @@ export default async function ServicePage({ params }: Props) {
               <FAQAccordion faqs={copy.faqs} />
             </section>
 
-            {/* Lead Capture Form */}
-            <section id="lead-form-section" className="pt-12 border-t border-white/10">
-              <div className="text-center max-w-xl mx-auto mb-8">
-                <h2 className="font-display text-3xl font-bold text-white mb-2">Ready to Scale Your Systems?</h2>
-                <p className="text-xs text-gray-400 font-sans">
-                  Book a consultation with our senior architects and get a customized integration blueprint for your operations stack.
-                </p>
-              </div>
-              <MultiStepLeadForm />
-            </section>
+            {/* Dynamic SEO Internal Linking Sections */}
+            {relations && (
+              <section className="space-y-16 pt-12 border-t border-white/5">
+                <RelatedIndustries relatedSlugs={relations.industries} />
+                <RelatedResources resources={relations.resources} />
+              </section>
+            )}
+
+            {/* CTA Section */}
+            <CTASection />
 
           </div>
         </main>
@@ -458,8 +541,8 @@ export default async function ServicePage({ params }: Props) {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-7 space-y-8">
+          <div className="space-y-8 max-w-4xl mx-auto">
+            <div className="space-y-8">
               <div className="space-y-4">
                 <span className="text-xs font-mono uppercase tracking-widest text-[#00D2FF]">
                   Premium Agency Solutions
@@ -467,10 +550,23 @@ export default async function ServicePage({ params }: Props) {
                 <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-none">
                   {service.name}
                 </h1>
-                <p className="text-lg text-gray-300 leading-relaxed pt-2 font-sans font-light">
-                  {service.fullDesc}
-                </p>
+                <p 
+                  className="text-lg text-gray-300 leading-relaxed pt-2 font-sans font-light"
+                  dangerouslySetInnerHTML={{ __html: injectContextualLinks(service.fullDesc) }}
+                />
               </div>
+
+              {/* AI Search Engine Optimization Summary */}
+              {geoData && (
+                <div className="my-6">
+                  <AISummary
+                    tldr={geoData.tldr}
+                    takeaways={geoData.takeaways}
+                    insight={geoData.insight}
+                    stats={geoData.stats}
+                  />
+                </div>
+              )}
 
               <div className="grid grid-cols-3 gap-4 pt-4">
                 <div className="glass-panel p-4 rounded-xl border border-white/5 space-y-2">
@@ -500,6 +596,17 @@ export default async function ServicePage({ params }: Props) {
                   ))}
                 </div>
               </div>
+
+              {/* AI Comparison Table comparing Custom vs SaaS */}
+              {geoData && geoData.comparison && (
+                <div className="pt-6 border-t border-white/10">
+                  <AIComparisonTable
+                     title={geoData.comparison.title}
+                     headers={geoData.comparison.headers}
+                     rows={geoData.comparison.rows}
+                  />
+                </div>
+              )}
 
               <div className="pt-8 border-t border-white/10 space-y-6">
                 <div>
@@ -536,11 +643,19 @@ export default async function ServicePage({ params }: Props) {
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div id="lead-form-section" className="lg:col-span-5 lg:sticky lg:top-28">
-              <MultiStepLeadForm />
+              {/* Dynamic SEO Internal Linking Sections */}
+              {relations && (
+                <div className="pt-8 border-t border-white/10 space-y-8">
+                  <RelatedIndustries relatedSlugs={relations.industries} />
+                  <RelatedResources resources={relations.resources} />
+                </div>
+              )}
             </div>
+          </div>
+          
+          <div className="mt-16">
+            <CTASection />
           </div>
         </div>
       </main>
